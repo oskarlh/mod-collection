@@ -1,0 +1,8097 @@
+{
+	"$schema": "https://spec.openapis.org/oas/3.0/schema/2024-10-18",
+	"components": {
+		"headers": {
+			"RateLimitLimit": {
+				"description": "The number of allowed requests in a time window",
+				"schema": {
+					"format": "uint16",
+					"type": "integer"
+				}
+			},
+			"RateLimitRemaining": {
+				"description": "The number of allowed requests in the current time window",
+				"schema": {
+					"format": "uint16",
+					"type": "integer"
+				}
+			}
+		},
+		"requestBodies": {
+			"CreateApiKeyBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"username": {
+									"type": "string",
+									"description": "The username to log in with"
+								},
+								"password": {
+									"type": "string",
+									"format": "password",
+									"description": "The password to log in with"
+								},
+								"app": {
+									"type": "string",
+									"description": "The key context (what application is using this key?)"
+								}
+							},
+							"type": "object",
+							"required": ["username", "password", "app"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			},
+			"CreateCommentDetailBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"article_type": {
+									"type": "string",
+									"enum": ["n", "j", "v", "p", "w"],
+									"description": "The article type to add a comment to ([n]ews, [j]ournal, [v]ault, [p]oll, [w]iki)"
+								},
+								"article_id": {
+									"type": "integer",
+									"description": "The ID of the article to comment in"
+								},
+								"content_text": {
+									"type": "string",
+									"description": "The text of the comment to create"
+								},
+								"meta_rating": {
+									"type": "integer",
+									"description": "[Vault only] If supported, the rating attached to the comment."
+								}
+							},
+							"type": "object",
+							"required": ["article_type", "article_id", "content_text"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			},
+			"CreateForumPostBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"thread_id": {
+									"type": "integer",
+									"description": "The ID of the thread to post in"
+								},
+								"content_text": {
+									"type": "string",
+									"description": "The text of the forum post to create"
+								}
+							},
+							"type": "object",
+							"required": ["thread_id", "content_text"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			},
+			"CreateForumThreadBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"forum_id": {
+									"type": "integer",
+									"description": "The ID of the forum to post in"
+								},
+								"title": {
+									"type": "string",
+									"description": "The title of the thread to create"
+								},
+								"content_text": {
+									"type": "string",
+									"description": "The text of the first post in the thread"
+								}
+							},
+							"type": "object",
+							"required": ["forum_id", "title", "content_text"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			},
+			"CreateImageBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"image": {
+									"type": "string",
+									"format": "binary",
+									"description": "The image data. Maximum size: 2MB"
+								}
+							},
+							"type": "object",
+							"required": ["image"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			},
+			"CreateShoutBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"text": {
+									"type": "string",
+									"description": "The shout text"
+								}
+							},
+							"type": "object",
+							"required": ["text"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			},
+			"CreateWikiObjectBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {},
+							"type": "object"
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": false
+			},
+			"CreateWikiRevisionBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"title": {
+									"type": "string",
+									"description": "The title of the page to create"
+								},
+								"content_text": {
+									"type": "string",
+									"description": "The text of the page to create"
+								}
+							},
+							"type": "object",
+							"required": ["title", "content_text"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			},
+			"DeleteShoutBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"id": {
+									"type": "integer",
+									"description": "The ID of the shout to delete"
+								}
+							},
+							"type": "object",
+							"required": ["id"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			},
+			"EditCommentDetailBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"id": {
+									"type": "integer",
+									"description": "The ID of the comment to edit"
+								},
+								"content_text": {
+									"type": "string",
+									"description": "The updated text of the comment"
+								},
+								"meta_rating": {
+									"type": "integer",
+									"description": "[Vault only] If supported, the rating attached to the comment."
+								}
+							},
+							"type": "object",
+							"required": ["id", "content_text"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			},
+			"EditForumPostBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"id": {
+									"type": "integer",
+									"description": "The ID of the forum post to edit"
+								},
+								"content_text": {
+									"type": "string",
+									"description": "The updated text of the forum post"
+								}
+							},
+							"type": "object",
+							"required": ["id", "content_text"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			},
+			"EditShoutBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"id": {
+									"type": "integer",
+									"description": "The ID of the shout to edit"
+								},
+								"text": {
+									"type": "string",
+									"description": "The updated text of the shout"
+								}
+							},
+							"type": "object",
+							"required": ["id", "text"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			},
+			"EditWikiRevisionBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"id": {
+									"type": "integer",
+									"description": "The id of the revision to edit"
+								},
+								"title": {
+									"type": "string",
+									"description": "The title of the page to edit"
+								},
+								"content_text": {
+									"type": "string",
+									"description": "The new text of the page"
+								},
+								"message": {
+									"type": "string",
+									"description": "The change message"
+								}
+							},
+							"type": "object",
+							"required": ["id", "title", "content_text"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			},
+			"FormatPostBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"field": {
+									"type": "string",
+									"description": "If set, the specified field in the post body will be used instead of `text`"
+								},
+								"text": {
+									"type": "string",
+									"description": "The TWHL WikiCode text to turn into HTML"
+								}
+							},
+							"type": "object",
+							"required": ["text"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			},
+			"PageInformationPostBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"pages": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									},
+									"description": "The list of page slugs to check"
+								},
+								"embeds": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									},
+									"description": "The list of embed slugs to check"
+								}
+							},
+							"type": "object",
+							"required": ["pages", "embeds"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			},
+			"UploadPostBody": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"title": {
+									"type": "string",
+									"description": "The title of the page to create"
+								},
+								"file": {
+									"type": "string",
+									"description": "The file to upload"
+								},
+								"content_text": {
+									"type": "string",
+									"description": "The text of the page to create"
+								}
+							},
+							"type": "object",
+							"required": ["title", "file", "content_text"]
+						}
+					}
+				},
+				"description": "Posted data",
+				"required": true
+			}
+		},
+		"responses": {
+			"GetEnginesResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/Engine"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetEnginesPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Engine"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetGamesResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/Game"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetGamesPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Game"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetLicensesResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/License"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetLicensesPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/License"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetForumPostsResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/ForumPost"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetForumPostsPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/ForumPost"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"CreateForumPostResult": {
+				"description": "Operation successful",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/ForumPost"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"EditForumPostResult": {
+				"description": "Operation successful",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/ForumPost"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"FormatPostResult": {
+				"description": "HTML string",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetForumThreadsResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/ForumThread"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetForumThreadsPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/ForumThread"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"CreateForumThreadResult": {
+				"description": "Operation successful",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/ForumThread"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetForumsResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/Forum"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetForumsPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Forum"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetUsersResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/User"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetUsersPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/User"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetPermissionsResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/Permission"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetPermissionsPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Permission"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetCommentDetailsResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/CommentDetail"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetCommentDetailsPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/CommentDetail"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"CreateCommentDetailResult": {
+				"description": "Operation successful",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/CommentDetail"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"EditCommentDetailResult": {
+				"description": "Operation successful",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/CommentDetail"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetWikiRevisionsResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/WikiRevision"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetWikiRevisionsPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/WikiRevision"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"CreateWikiRevisionResult": {
+				"description": "Operation successful",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/WikiRevision"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"EditWikiRevisionResult": {
+				"description": "Operation successful",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/WikiRevision"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"UploadPostResult": {
+				"description": "Revision page",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/WikiRevision"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"CreateWikiObjectResult": {
+				"description": "Operation successful",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/WikiObject"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"PageInformationPostResult": {
+				"description": "Page information",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/WikiPageInformation"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetWikiRevisionMetasResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/WikiRevisionMeta"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetWikiRevisionMetasPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/WikiRevisionMeta"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetVaultCategoriesResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/VaultCategory"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetVaultCategoriesPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/VaultCategory"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetVaultTypesResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/VaultType"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetVaultTypesPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/VaultType"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetVaultIncludesResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/VaultInclude"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetVaultIncludesPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/VaultInclude"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetVaultScreenshotsResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/VaultScreenshot"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetVaultScreenshotsPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/VaultScreenshot"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetVaultItemsResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/VaultItem"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetVaultItemsPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/VaultItem"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetCompetitionsResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/Competition"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetCompetitionsPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Competition"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetCompetitionRestrictionGroupsResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/CompetitionRestrictionGroup"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetCompetitionRestrictionGroupsPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/CompetitionRestrictionGroup"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetCompetitionRestrictionsResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/CompetitionRestriction"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetCompetitionRestrictionsPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/CompetitionRestriction"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetCompetitionStatusesResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/CompetitionStatus"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetCompetitionStatusesPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/CompetitionStatus"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetCompetitionTypesResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/CompetitionType"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetCompetitionTypesPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/CompetitionType"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetCompetitionJudgeTypesResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/CompetitionJudgeType"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetCompetitionJudgeTypesPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/CompetitionJudgeType"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetShoutsResult": {
+				"description": "Query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/Shout"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetShoutsPagedResult": {
+				"description": "Paged query result",
+				"content": {
+					"application/json": {
+						"schema": {
+							"properties": {
+								"items": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Shout"
+									}
+								},
+								"page": {
+									"description": "The current page number",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"pages": {
+									"description": "The total number of pages",
+									"format": "uint32",
+									"type": "integer"
+								},
+								"total": {
+									"description": "The total number of items",
+									"format": "uint32",
+									"type": "integer"
+								}
+							},
+							"required": ["items", "page", "pages", "total"],
+							"type": "object"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"CreateShoutResult": {
+				"description": "Operation successful",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/Shout"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"EditShoutResult": {
+				"description": "Operation successful",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/Shout"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"DeleteShoutResult": {
+				"description": "Operation successful",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/Shout"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"GetShoutsCreatedFromResult": {
+				"description": "Recent shouts",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/Shout"
+							}
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"CreateImageResult": {
+				"description": "Operation successful",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/Image"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"CreateApiKeyResult": {
+				"description": "Operation successful",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/ApiKey"
+						}
+					}
+				},
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"UnauthorizedErrorResult": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/ErrorDescription"
+						}
+					}
+				},
+				"description": "Unauthorized. You either lack permission, or your API key is invalid, or you did not provide an API key",
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"NotFoundErrorResult": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/ErrorDescription"
+						}
+					}
+				},
+				"description": "Resource not found or insufficient permissions",
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"ValidationFailedErrorResult": {
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/ErrorDescription"
+						}
+					}
+				},
+				"description": "Validation failed",
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					}
+				}
+			},
+			"TooManyErrorResult": {
+				"content": {
+					"text/html": {}
+				},
+				"description": "Response you get if you send too many requests in a short amount of time",
+				"headers": {
+					"X-RateLimit-Limit": {
+						"$ref": "#/components/headers/RateLimitLimit"
+					},
+					"X-RateLimit-Remaining": {
+						"$ref": "#/components/headers/RateLimitRemaining"
+					},
+					"Retry-After": {
+						"description": "Seconds until you will be allowed to send requests again",
+						"schema": {
+							"format": "uint16",
+							"type": "integer"
+						}
+					},
+					"X-RateLimit-Reset": {
+						"description": "The time as a UNIX timestamp when you will be allowed to send requests again",
+						"schema": {
+							"format": "unixtime",
+							"type": "integer"
+						}
+					}
+				}
+			}
+		},
+		"schemas": {
+			"ErrorDescription": {
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": ["message"],
+				"type": "object"
+			},
+			"Engine": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"name": {
+						"type": "string"
+					},
+					"orderindex": {
+						"type": "integer",
+						"format": "double-int"
+					}
+				}
+			},
+			"Game": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"engine_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"name": {
+						"type": "string"
+					},
+					"abbreviation": {
+						"type": "string"
+					},
+					"orderindex": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"engine": {
+						"$ref": "#/components/schemas/Engine"
+					}
+				}
+			},
+			"License": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"orderindex": {
+						"type": "integer",
+						"format": "double-int"
+					}
+				}
+			},
+			"ForumPost": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"forum_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"thread_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"user_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"content_text": {
+						"type": "string"
+					},
+					"content_html": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"forum": {
+						"$ref": "#/components/schemas/Forum"
+					},
+					"thread": {
+						"$ref": "#/components/schemas/ForumThread"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User"
+					}
+				}
+			},
+			"ForumThread": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"forum_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"user_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"title": {
+						"type": "string"
+					},
+					"stat_views": {
+						"type": "string"
+					},
+					"stat_posts": {
+						"type": "string"
+					},
+					"last_post_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"is_open": {
+						"type": "string"
+					},
+					"is_sticky": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"forum": {
+						"$ref": "#/components/schemas/Forum"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User"
+					},
+					"last_post": {
+						"$ref": "#/components/schemas/ForumPost"
+					}
+				}
+			},
+			"Forum": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"slug": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"stat_threads": {
+						"type": "string"
+					},
+					"stat_posts": {
+						"type": "string"
+					},
+					"last_post_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"order_index": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"last_post": {
+						"$ref": "#/components/schemas/ForumPost"
+					}
+				}
+			},
+			"User": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"name": {
+						"type": "string"
+					},
+					"avatar_custom": {
+						"type": "string"
+					},
+					"avatar_file": {
+						"type": "string"
+					},
+					"title_custom": {
+						"type": "string"
+					},
+					"title_text": {
+						"type": "string"
+					},
+					"avatar_full": {
+						"type": "string"
+					},
+					"avatar_small": {
+						"type": "string"
+					},
+					"avatar_inline": {
+						"type": "string"
+					},
+					"last_login_time": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"last_access_time": {
+						"type": "string",
+						"format": "date-time"
+					}
+				}
+			},
+			"Permission": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"is_default": {
+						"type": "string"
+					}
+				}
+			},
+			"CommentDetail": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"user_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"article_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"article_type": {
+						"type": "string"
+					},
+					"content_text": {
+						"type": "string"
+					},
+					"content_html": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"comment_metas": {
+						"items": {
+							"$ref": "#/components/schemas/CommentMeta"
+						},
+						"type": "array"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User"
+					}
+				}
+			},
+			"CommentMeta": {
+				"type": "object",
+				"properties": {
+					"comment_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"key": {
+						"type": "string"
+					},
+					"value": {
+						"type": "string"
+					}
+				}
+			},
+			"WikiRevision": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"object_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"user_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"is_active": {
+						"type": "string"
+					},
+					"slug": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"content_text": {
+						"type": "string"
+					},
+					"content_html": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"wiki_object": {
+						"$ref": "#/components/schemas/WikiObject"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User"
+					},
+					"wiki_revision_metas": {
+						"items": {
+							"$ref": "#/components/schemas/WikiRevisionMeta"
+						},
+						"type": "array"
+					},
+					"wiki_revision_books": {
+						"items": {
+							"$ref": "#/components/schemas/WikiRevisionBook"
+						},
+						"type": "array"
+					},
+					"wiki_revision_credits": {
+						"items": {
+							"$ref": "#/components/schemas/WikiRevisionCredit"
+						},
+						"type": "array"
+					}
+				}
+			},
+			"WikiObject": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"type_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"current_revision_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"permission_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"stat_comments": {
+						"type": "string"
+					},
+					"flag_locked": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"current_revision": {
+						"$ref": "#/components/schemas/WikiRevision"
+					},
+					"permission": {
+						"$ref": "#/components/schemas/Permission"
+					}
+				}
+			},
+			"WikiPageInformation": {
+				"type": "object",
+				"properties": {}
+			},
+			"WikiRevisionMeta": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"revision_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"key": {
+						"type": "string"
+					},
+					"value": {
+						"type": "string"
+					}
+				}
+			},
+			"WikiRevisionBook": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"revision_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"book_name": {
+						"type": "string"
+					},
+					"chapter_name": {
+						"type": "string"
+					},
+					"chapter_number": {
+						"type": "string"
+					},
+					"page_number": {
+						"type": "string"
+					},
+					"wiki_revision": {
+						"$ref": "#/components/schemas/WikiRevision"
+					}
+				}
+			},
+			"WikiRevisionCredit": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"type": {
+						"type": "string"
+					},
+					"revision_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"description": {
+						"type": "string"
+					},
+					"user_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"name": {
+						"type": "string"
+					},
+					"url": {
+						"type": "string"
+					},
+					"wayback_url": {
+						"type": "string"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User"
+					}
+				}
+			},
+			"VaultCategory": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"orderindex": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"adjective": {
+						"type": "string"
+					}
+				}
+			},
+			"VaultType": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"name": {
+						"type": "string"
+					},
+					"orderindex": {
+						"type": "integer",
+						"format": "double-int"
+					}
+				}
+			},
+			"VaultInclude": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"type_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"orderindex": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"vault_type": {
+						"$ref": "#/components/schemas/VaultType"
+					}
+				}
+			},
+			"VaultScreenshot": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"item_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"is_primary": {
+						"type": "string"
+					},
+					"image_thumb": {
+						"type": "string"
+					},
+					"image_small": {
+						"type": "string"
+					},
+					"image_medium": {
+						"type": "string"
+					},
+					"image_large": {
+						"type": "string"
+					},
+					"image_full": {
+						"type": "string"
+					},
+					"image_size": {
+						"type": "string"
+					},
+					"order_index": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"vault_item": {
+						"$ref": "#/components/schemas/VaultItem"
+					}
+				}
+			},
+			"VaultItem": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"user_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"engine_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"game_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"category_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"type_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"license_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"name": {
+						"type": "string"
+					},
+					"content_text": {
+						"type": "string"
+					},
+					"content_html": {
+						"type": "string"
+					},
+					"is_hosted_externally": {
+						"type": "boolean"
+					},
+					"file_location": {
+						"type": "string"
+					},
+					"file_size": {
+						"type": "string"
+					},
+					"link_broken": {
+						"type": "boolean"
+					},
+					"flag_ratings": {
+						"type": "boolean"
+					},
+					"stat_views": {
+						"type": "string"
+					},
+					"stat_downloads": {
+						"type": "string"
+					},
+					"stat_ratings": {
+						"type": "string"
+					},
+					"stat_comments": {
+						"type": "string"
+					},
+					"stat_average_rating": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"vault_screenshots": {
+						"items": {
+							"$ref": "#/components/schemas/VaultScreenshot"
+						},
+						"type": "array"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User"
+					},
+					"engine": {
+						"$ref": "#/components/schemas/Engine"
+					},
+					"game": {
+						"$ref": "#/components/schemas/Game"
+					},
+					"license": {
+						"$ref": "#/components/schemas/License"
+					},
+					"vault_category": {
+						"$ref": "#/components/schemas/VaultCategory"
+					},
+					"vault_type": {
+						"$ref": "#/components/schemas/VaultType"
+					},
+					"vault_includes": {
+						"$ref": "#/components/schemas/VaultInclude"
+					},
+					"vault_item_reviews": {
+						"items": {
+							"$ref": "#/components/schemas/VaultItemReview"
+						},
+						"type": "array"
+					},
+					"motms": {
+						"items": {
+							"$ref": "#/components/schemas/Motm"
+						},
+						"type": "array"
+					}
+				}
+			},
+			"VaultItemReview": {
+				"type": "object",
+				"properties": {}
+			},
+			"Motm": {
+				"type": "object",
+				"properties": {}
+			},
+			"Competition": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"status_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"type_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"judge_type_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"name": {
+						"type": "string"
+					},
+					"brief_text": {
+						"type": "string"
+					},
+					"brief_html": {
+						"type": "string"
+					},
+					"brief_attachment": {
+						"type": "string"
+					},
+					"open_date": {
+						"type": "string"
+					},
+					"close_date": {
+						"type": "string"
+					},
+					"voting_close_date": {
+						"type": "string"
+					},
+					"results_intro_text": {
+						"type": "string"
+					},
+					"results_intro_html": {
+						"type": "string"
+					},
+					"results_outro_text": {
+						"type": "string"
+					},
+					"results_outro_html": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"status": {
+						"$ref": "#/components/schemas/CompetitionStatus"
+					},
+					"type": {
+						"$ref": "#/components/schemas/CompetitionType"
+					},
+					"judge_type": {
+						"$ref": "#/components/schemas/CompetitionJudgeType"
+					}
+				}
+			},
+			"CompetitionRestrictionGroup": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"title": {
+						"type": "string"
+					},
+					"is_multiple": {
+						"type": "string"
+					}
+				}
+			},
+			"CompetitionRestriction": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"group_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"content_text": {
+						"type": "string"
+					},
+					"content_html": {
+						"type": "string"
+					},
+					"group": {
+						"$ref": "#/components/schemas/CompetitionRestrictionGroup"
+					}
+				}
+			},
+			"CompetitionStatus": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"name": {
+						"type": "string"
+					}
+				}
+			},
+			"CompetitionType": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"name": {
+						"type": "string"
+					}
+				}
+			},
+			"CompetitionJudgeType": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"name": {
+						"type": "string"
+					}
+				}
+			},
+			"Shout": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"user_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"content": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User"
+					}
+				}
+			},
+			"Image": {
+				"type": "object",
+				"properties": {}
+			},
+			"ApiKey": {
+				"type": "object",
+				"properties": {
+					"user_id": {
+						"type": "integer",
+						"format": "double-int"
+					},
+					"key": {
+						"type": "string"
+					},
+					"app": {
+						"type": "string"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					}
+				}
+			}
+		},
+		"securitySchemes": {
+			"httpBearerToken": {
+				"scheme": "bearer",
+				"type": "http"
+			}
+		}
+	},
+	"externalDocs": {
+		"url": "http://localhost:82/",
+		"description": "TWHL main website"
+	},
+	"info": {
+		"title": "THWL JSON API",
+		"description": "An unnecessarily feature-complete JSON API for TWHL.",
+		"termsOfService": "http://localhost:82/wiki/page/TWHL:_Terms_of_Service",
+		"contact": {
+			"name": "TWHL Staff",
+			"url": "http://localhost:82/forum/view/meta"
+		},
+		"license": {
+			"name": "MIT",
+			"url": "https://opensource.org/license/MIT"
+		},
+		"version": "latest"
+	},
+	"openapi": "3.0.4",
+	"paths": {
+		"/engines": {
+			"get": {
+				"tags": ["engines"],
+				"operationId": "getEngines",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetEnginesResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/engines/paged": {
+			"get": {
+				"tags": ["engines"],
+				"operationId": "getEnginesPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetEnginesPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/games": {
+			"get": {
+				"tags": ["games"],
+				"operationId": "getGames",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the engine",
+						"in": "query",
+						"name": "engine_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["engine"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetGamesResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/games/paged": {
+			"get": {
+				"tags": ["games"],
+				"operationId": "getGamesPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the engine",
+						"in": "query",
+						"name": "engine_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["engine"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetGamesPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/licenses": {
+			"get": {
+				"tags": ["licenses"],
+				"operationId": "getLicenses",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetLicensesResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/licenses/paged": {
+			"get": {
+				"tags": ["licenses"],
+				"operationId": "getLicensesPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetLicensesPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/posts": {
+			"get": {
+				"tags": ["posts"],
+				"operationId": "getForumPosts",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: content_text",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the forum",
+						"in": "query",
+						"name": "forum_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "The ID of the thread",
+						"in": "query",
+						"name": "thread_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "The ID of the user",
+						"in": "query",
+						"name": "user_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["forum", "thread", "user"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetForumPostsResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			},
+			"post": {
+				"tags": ["posts"],
+				"operationId": "createForumPost",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"$ref": "#/components/requestBodies/CreateForumPostBody"
+				},
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/CreateForumPostResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"security": [{}]
+			},
+			"put": {
+				"tags": ["posts"],
+				"operationId": "editForumPost",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"$ref": "#/components/requestBodies/EditForumPostBody"
+				},
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/EditForumPostResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"security": [{}]
+			}
+		},
+		"/posts/paged": {
+			"get": {
+				"tags": ["posts"],
+				"operationId": "getForumPostsPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: content_text",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the forum",
+						"in": "query",
+						"name": "forum_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "The ID of the thread",
+						"in": "query",
+						"name": "thread_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "The ID of the user",
+						"in": "query",
+						"name": "user_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["forum", "thread", "user"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetForumPostsPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/posts/format": {
+			"post": {
+				"tags": ["posts"],
+				"operationId": "formatPost",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/FormatPostResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"requestBody": {
+					"$ref": "#/components/requestBodies/FormatPostBody"
+				}
+			}
+		},
+		"/threads": {
+			"get": {
+				"tags": ["threads"],
+				"operationId": "getForumThreads",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: title",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the forum",
+						"in": "query",
+						"name": "forum_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "The ID of the user",
+						"in": "query",
+						"name": "user_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["forum", "user", "last_post", "last_post.user"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetForumThreadsResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			},
+			"post": {
+				"tags": ["threads"],
+				"operationId": "createForumThread",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"$ref": "#/components/requestBodies/CreateForumThreadBody"
+				},
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/CreateForumThreadResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"security": [{}]
+			}
+		},
+		"/threads/paged": {
+			"get": {
+				"tags": ["threads"],
+				"operationId": "getForumThreadsPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: title",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the forum",
+						"in": "query",
+						"name": "forum_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "The ID of the user",
+						"in": "query",
+						"name": "user_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["forum", "user", "last_post", "last_post.user"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetForumThreadsPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/forums": {
+			"get": {
+				"tags": ["forums"],
+				"operationId": "getForums",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["last_post", "last_post.thread", "last_post.user"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetForumsResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/forums/paged": {
+			"get": {
+				"tags": ["forums"],
+				"operationId": "getForumsPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["last_post", "last_post.thread", "last_post.user"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetForumsPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/users": {
+			"get": {
+				"tags": ["users"],
+				"operationId": "getUsers",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetUsersResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/users/paged": {
+			"get": {
+				"tags": ["users"],
+				"operationId": "getUsersPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetUsersPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/permissions": {
+			"get": {
+				"tags": ["permissions"],
+				"operationId": "getPermissions",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetPermissionsResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/permissions/paged": {
+			"get": {
+				"tags": ["permissions"],
+				"operationId": "getPermissionsPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetPermissionsPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/comments": {
+			"get": {
+				"tags": ["comments"],
+				"operationId": "getCommentDetails",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: content_text",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The article type ([n]ews, [j]ournal, [v]ault, [p]oll, [w]iki)",
+						"in": "query",
+						"name": "article_type",
+						"schema": {
+							"type": "string",
+							"enum": ["n", "j", "v", "p", "w"]
+						}
+					},
+					{
+						"description": "The ID of the article",
+						"in": "query",
+						"name": "article_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "The ID of the user",
+						"in": "query",
+						"name": "user_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["comment_metas", "user"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetCommentDetailsResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			},
+			"post": {
+				"tags": ["comments"],
+				"operationId": "createCommentDetail",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"$ref": "#/components/requestBodies/CreateCommentDetailBody"
+				},
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/CreateCommentDetailResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"security": [{}]
+			},
+			"put": {
+				"tags": ["comments"],
+				"operationId": "editCommentDetail",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"$ref": "#/components/requestBodies/EditCommentDetailBody"
+				},
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/EditCommentDetailResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"security": [{}]
+			}
+		},
+		"/comments/paged": {
+			"get": {
+				"tags": ["comments"],
+				"operationId": "getCommentDetailsPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: content_text",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The article type ([n]ews, [j]ournal, [v]ault, [p]oll, [w]iki)",
+						"in": "query",
+						"name": "article_type",
+						"schema": {
+							"type": "string",
+							"enum": ["n", "j", "v", "p", "w"]
+						}
+					},
+					{
+						"description": "The ID of the article",
+						"in": "query",
+						"name": "article_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "The ID of the user",
+						"in": "query",
+						"name": "user_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["comment_metas", "user"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetCommentDetailsPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/wiki-revisions": {
+			"get": {
+				"tags": ["wiki-revisions"],
+				"operationId": "getWikiRevisions",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: title, content_text",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "Allows to filter for only active or inactive revisions",
+						"in": "query",
+						"name": "is_active",
+						"schema": {
+							"type": "integer",
+							"enum": [0, 1]
+						}
+					},
+					{
+						"description": "The ID of the parent wiki object",
+						"in": "query",
+						"name": "object_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "The ID of the user",
+						"in": "query",
+						"name": "user_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"name": "sort_by",
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": ["title", "created_at"]
+						},
+						"description": "The column to sort the results by"
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": [
+									"wiki_object",
+									"wiki_object.permission",
+									"wiki_object.current_revision",
+									"user",
+									"wiki_revision_metas"
+								],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetWikiRevisionsResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			},
+			"post": {
+				"tags": ["wiki-revisions"],
+				"operationId": "createWikiRevision",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"$ref": "#/components/requestBodies/CreateWikiRevisionBody"
+				},
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/CreateWikiRevisionResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			},
+			"put": {
+				"tags": ["wiki-revisions"],
+				"operationId": "editWikiRevision",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"$ref": "#/components/requestBodies/EditWikiRevisionBody"
+				},
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/EditWikiRevisionResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/wiki-revisions/paged": {
+			"get": {
+				"tags": ["wiki-revisions"],
+				"operationId": "getWikiRevisionsPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: title, content_text",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "Allows to filter for only active or inactive revisions",
+						"in": "query",
+						"name": "is_active",
+						"schema": {
+							"type": "integer",
+							"enum": [0, 1]
+						}
+					},
+					{
+						"description": "The ID of the parent wiki object",
+						"in": "query",
+						"name": "object_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "The ID of the user",
+						"in": "query",
+						"name": "user_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"name": "sort_by",
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": ["title", "created_at"]
+						},
+						"description": "The column to sort the results by"
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": [
+									"wiki_object",
+									"wiki_object.permission",
+									"wiki_object.current_revision",
+									"user",
+									"wiki_revision_metas"
+								],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetWikiRevisionsPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/wiki-revisions/upload": {
+			"post": {
+				"tags": ["wiki-revisions"],
+				"operationId": "uploadPost",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/UploadPostResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"requestBody": {
+					"$ref": "#/components/requestBodies/UploadPostBody"
+				}
+			}
+		},
+		"/wiki-objects": {
+			"post": {
+				"tags": ["wiki-objects"],
+				"operationId": "createWikiObject",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"$ref": "#/components/requestBodies/CreateWikiObjectBody"
+				},
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/CreateWikiObjectResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/wiki-objects/page-information": {
+			"post": {
+				"tags": ["wiki-objects"],
+				"operationId": "pageInformationPost",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/PageInformationPostResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"requestBody": {
+					"$ref": "#/components/requestBodies/PageInformationPostBody"
+				}
+			}
+		},
+		"/wiki-revision-metas": {
+			"get": {
+				"tags": ["wiki-revision-metas"],
+				"operationId": "getWikiRevisionMetas",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: ",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the wiki revision",
+						"in": "query",
+						"name": "revision_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "The metadata key ([c]ategory, [l]ink, image [w]idth, image [h]eight, file [s]ize, [u]pload id)",
+						"in": "query",
+						"name": "key",
+						"schema": {
+							"type": "string",
+							"enum": ["c", "l", "w", "h", "s", "u"]
+						}
+					},
+					{
+						"description": "The metadata value",
+						"in": "query",
+						"name": "value",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetWikiRevisionMetasResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/wiki-revision-metas/paged": {
+			"get": {
+				"tags": ["wiki-revision-metas"],
+				"operationId": "getWikiRevisionMetasPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: ",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the wiki revision",
+						"in": "query",
+						"name": "revision_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "The metadata key ([c]ategory, [l]ink, image [w]idth, image [h]eight, file [s]ize, [u]pload id)",
+						"in": "query",
+						"name": "key",
+						"schema": {
+							"type": "string",
+							"enum": ["c", "l", "w", "h", "s", "u"]
+						}
+					},
+					{
+						"description": "The metadata value",
+						"in": "query",
+						"name": "value",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetWikiRevisionMetasPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/vault-categories": {
+			"get": {
+				"tags": ["vault-categories"],
+				"operationId": "getVaultCategories",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetVaultCategoriesResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/vault-categories/paged": {
+			"get": {
+				"tags": ["vault-categories"],
+				"operationId": "getVaultCategoriesPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetVaultCategoriesPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/vault-types": {
+			"get": {
+				"tags": ["vault-types"],
+				"operationId": "getVaultTypes",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetVaultTypesResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/vault-types/paged": {
+			"get": {
+				"tags": ["vault-types"],
+				"operationId": "getVaultTypesPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetVaultTypesPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/vault-includes": {
+			"get": {
+				"tags": ["vault-includes"],
+				"operationId": "getVaultIncludes",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["vault_type"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetVaultIncludesResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/vault-includes/paged": {
+			"get": {
+				"tags": ["vault-includes"],
+				"operationId": "getVaultIncludesPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["vault_type"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetVaultIncludesPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/vault-screenshots": {
+			"get": {
+				"tags": ["vault-screenshots"],
+				"operationId": "getVaultScreenshots",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: ",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the vault item",
+						"in": "query",
+						"name": "item_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Filter for the primary (first) screenshot",
+						"in": "query",
+						"name": "is_primary",
+						"schema": {
+							"type": "integer",
+							"enum": [0, 1]
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["vault_item"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetVaultScreenshotsResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/vault-screenshots/paged": {
+			"get": {
+				"tags": ["vault-screenshots"],
+				"operationId": "getVaultScreenshotsPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: ",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the vault item",
+						"in": "query",
+						"name": "item_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Filter for the primary (first) screenshot",
+						"in": "query",
+						"name": "is_primary",
+						"schema": {
+							"type": "integer",
+							"enum": [0, 1]
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["vault_item"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetVaultScreenshotsPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/vault-items": {
+			"get": {
+				"tags": ["vault-items"],
+				"operationId": "getVaultItems",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the user",
+						"in": "query",
+						"name": "user_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"name": "sort_by",
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": ["updated_at"]
+						},
+						"description": "The column to sort the results by"
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": [
+									"vault_screenshots",
+									"user",
+									"engine",
+									"game",
+									"license",
+									"vault_category",
+									"vault_type",
+									"vault_includes",
+									"vault_item_reviews",
+									"motms"
+								],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetVaultItemsResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/vault-items/paged": {
+			"get": {
+				"tags": ["vault-items"],
+				"operationId": "getVaultItemsPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the user",
+						"in": "query",
+						"name": "user_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"name": "sort_by",
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": ["updated_at"]
+						},
+						"description": "The column to sort the results by"
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": [
+									"vault_screenshots",
+									"user",
+									"engine",
+									"game",
+									"license",
+									"vault_category",
+									"vault_type",
+									"vault_includes",
+									"vault_item_reviews",
+									"motms"
+								],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetVaultItemsPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/competitions": {
+			"get": {
+				"tags": ["competitions"],
+				"operationId": "getCompetitions",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The status ID of the competition",
+						"in": "query",
+						"name": "status_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"name": "sort_by",
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": ["updated_at", "id"]
+						},
+						"description": "The column to sort the results by"
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["status", "type", "judge_type"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetCompetitionsResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/competitions/paged": {
+			"get": {
+				"tags": ["competitions"],
+				"operationId": "getCompetitionsPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The status ID of the competition",
+						"in": "query",
+						"name": "status_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"name": "sort_by",
+						"in": "query",
+						"schema": {
+							"type": "string",
+							"enum": ["updated_at", "id"]
+						},
+						"description": "The column to sort the results by"
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["status", "type", "judge_type"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetCompetitionsPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/competition-restriction-groups": {
+			"get": {
+				"tags": ["competition-restriction-groups"],
+				"operationId": "getCompetitionRestrictionGroups",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: title",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetCompetitionRestrictionGroupsResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/competition-restriction-groups/paged": {
+			"get": {
+				"tags": ["competition-restriction-groups"],
+				"operationId": "getCompetitionRestrictionGroupsPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: title",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetCompetitionRestrictionGroupsPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/competition-restrictions": {
+			"get": {
+				"tags": ["competition-restrictions"],
+				"operationId": "getCompetitionRestrictions",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: content_text",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the restriction group",
+						"in": "query",
+						"name": "group_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["group"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetCompetitionRestrictionsResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/competition-restrictions/paged": {
+			"get": {
+				"tags": ["competition-restrictions"],
+				"operationId": "getCompetitionRestrictionsPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: content_text",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the restriction group",
+						"in": "query",
+						"name": "group_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["group"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetCompetitionRestrictionsPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/competition-statuses": {
+			"get": {
+				"tags": ["competition-statuses"],
+				"operationId": "getCompetitionStatuses",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetCompetitionStatusesResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/competition-statuses/paged": {
+			"get": {
+				"tags": ["competition-statuses"],
+				"operationId": "getCompetitionStatusesPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetCompetitionStatusesPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/competition-types": {
+			"get": {
+				"tags": ["competition-types"],
+				"operationId": "getCompetitionTypes",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetCompetitionTypesResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/competition-types/paged": {
+			"get": {
+				"tags": ["competition-types"],
+				"operationId": "getCompetitionTypesPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetCompetitionTypesPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/competition-judge-types": {
+			"get": {
+				"tags": ["competition-judge-types"],
+				"operationId": "getCompetitionJudgeTypes",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetCompetitionJudgeTypesResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/competition-judge-types/paged": {
+			"get": {
+				"tags": ["competition-judge-types"],
+				"operationId": "getCompetitionJudgeTypesPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: name",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetCompetitionJudgeTypesPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/shouts": {
+			"get": {
+				"tags": ["shouts"],
+				"operationId": "getShouts",
+				"parameters": [
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: content",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the user",
+						"in": "query",
+						"name": "user_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["user"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetShoutsResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			},
+			"post": {
+				"tags": ["shouts"],
+				"operationId": "createShout",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"$ref": "#/components/requestBodies/CreateShoutBody"
+				},
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/CreateShoutResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			},
+			"put": {
+				"tags": ["shouts"],
+				"operationId": "editShout",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"$ref": "#/components/requestBodies/EditShoutBody"
+				},
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/EditShoutResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"security": [{}]
+			},
+			"delete": {
+				"tags": ["shouts"],
+				"operationId": "deleteShout",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"$ref": "#/components/requestBodies/DeleteShoutBody"
+				},
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/DeleteShoutResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"security": [{}]
+			}
+		},
+		"/shouts/paged": {
+			"get": {
+				"tags": ["shouts"],
+				"operationId": "getShoutsPaged",
+				"parameters": [
+					{
+						"description": "The page of results to return. Works alongside `count`",
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"format": "uint32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Maximum number of results to return. Maximum is 100, default is 10",
+						"in": "query",
+						"name": "count",
+						"schema": {
+							"default": 10,
+							"format": "uint16",
+							"minimum": 1,
+							"maximum": 100,
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Search string to filter results by. Filtered columns are: content",
+						"in": "query",
+						"name": "filter",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "IDs of objects to return",
+						"explode": false,
+						"in": "query",
+						"name": "id",
+						"schema": {
+							"items": {
+								"format": "uint32",
+								"type": "integer"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					},
+					{
+						"description": "Set to true to sort in reverse order",
+						"in": "query",
+						"name": "sort_descending",
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					},
+					{
+						"description": "The ID of the user",
+						"in": "query",
+						"name": "user_id",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					},
+					{
+						"description": "Relations to expand.",
+						"explode": false,
+						"in": "query",
+						"name": "expand",
+						"schema": {
+							"items": {
+								"enum": ["user"],
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetShoutsPagedResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/shouts/from": {
+			"get": {
+				"tags": ["shouts"],
+				"operationId": "getShoutsCreatedFrom",
+				"parameters": [
+					{
+						"required": false,
+						"description": "The timestamp to retrieve shouts posted after",
+						"in": "query",
+						"name": "timestamp",
+						"schema": {
+							"type": "integer",
+							"format": "unixtime"
+						}
+					},
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/GetShoutsCreatedFromResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				}
+			}
+		},
+		"/image-upload": {
+			"post": {
+				"tags": ["image-upload"],
+				"operationId": "createImage",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"$ref": "#/components/requestBodies/CreateImageBody"
+				},
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/CreateImageResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		},
+		"/api-key": {
+			"post": {
+				"tags": ["api-key"],
+				"operationId": "createApiKey",
+				"parameters": [
+					{
+						"example": "XMLHttpRequest",
+						"in": "header",
+						"name": "X-Requested-With",
+						"schema": {
+							"enum": ["XMLHttpRequest"],
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"$ref": "#/components/requestBodies/CreateApiKeyBody"
+				},
+				"responses": {
+					"200": {
+						"$ref": "#/components/responses/CreateApiKeyResult"
+					},
+					"404": {
+						"$ref": "#/components/responses/NotFoundErrorResult"
+					},
+					"422": {
+						"$ref": "#/components/responses/ValidationFailedErrorResult"
+					}
+				},
+				"security": [
+					{
+						"httpBearerToken": []
+					}
+				]
+			}
+		}
+	},
+	"security": [
+		{},
+		{
+			"httpBearerToken": []
+		}
+	],
+	"servers": [
+		{
+			"url": "http://localhost:82/api"
+		}
+	],
+	"tags": [
+		{
+			"name": "engines",
+			"description": "Game Engines"
+		},
+		{
+			"name": "games",
+			"description": "Games"
+		},
+		{
+			"name": "licenses",
+			"description": "Content Licenses"
+		},
+		{
+			"name": "posts",
+			"description": "Forum Posts"
+		},
+		{
+			"name": "threads",
+			"description": "Forum Threads"
+		},
+		{
+			"name": "forums",
+			"description": "Forums"
+		},
+		{
+			"name": "users",
+			"description": "Users"
+		},
+		{
+			"name": "permissions",
+			"description": "User Permissions"
+		},
+		{
+			"name": "comments",
+			"description": "Comments"
+		},
+		{
+			"name": "comment-metas",
+			"description": "Comment Metas"
+		},
+		{
+			"name": "wiki-revisions",
+			"description": "Wiki Revisions"
+		},
+		{
+			"name": "wiki-objects",
+			"description": "Wiki Objects"
+		},
+		{
+			"name": "wiki-page-information",
+			"description": "Wiki Page Information"
+		},
+		{
+			"name": "wiki-revision-metas",
+			"description": "Wiki Revision Metas"
+		},
+		{
+			"name": "wiki-revision-book",
+			"description": "Wiki Revision Books"
+		},
+		{
+			"name": "wiki-revision-credit",
+			"description": "Wiki Revision Credits"
+		},
+		{
+			"name": "vault-categories",
+			"description": "Vault Categories"
+		},
+		{
+			"name": "vault-types",
+			"description": "Vault Types"
+		},
+		{
+			"name": "vault-includes",
+			"description": "Vault Includes"
+		},
+		{
+			"name": "vault-screenshots",
+			"description": "Vault Screenshots"
+		},
+		{
+			"name": "vault-items",
+			"description": "Vault Items"
+		},
+		{
+			"name": "vault-item-review",
+			"description": "Vault Item Reviews"
+		},
+		{
+			"name": "motm",
+			"description": "Map of the Month"
+		},
+		{
+			"name": "competitions",
+			"description": "Competitions"
+		},
+		{
+			"name": "competition-restriction-groups",
+			"description": "Competition Restriction Groups"
+		},
+		{
+			"name": "competition-restrictions",
+			"description": "Competition Restrictions"
+		},
+		{
+			"name": "competition-statuses",
+			"description": "Competition Statuses"
+		},
+		{
+			"name": "competition-types",
+			"description": "Competition Types"
+		},
+		{
+			"name": "competition-judge-types",
+			"description": "Competition Judge Types"
+		},
+		{
+			"name": "shouts",
+			"description": "Shouts"
+		},
+		{
+			"name": "image-upload",
+			"description": "Image Upload"
+		},
+		{
+			"name": "api-key",
+			"description": "Api Keys"
+		}
+	]
+}

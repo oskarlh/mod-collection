@@ -1,0 +1,9 @@
+[2026-05-31T18:09:43.485Z] Error: Request failed with status 200: 
+Stack:
+Error: Request failed with status 200: 
+    at <anonymous> (/home/oskar/Programming/mod-collection/mod-scraper/node_modules/@hey-api/openapi-ts/dist/src-BCi83sdM.mjs:260:37)
+    at async <anonymous> (/home/oskar/Programming/mod-collection/mod-scraper/node_modules/@hey-api/openapi-ts/dist/src-BCi83sdM.mjs:266:34)
+    at async <anonymous> (/home/oskar/Programming/mod-collection/mod-scraper/node_modules/@hey-api/openapi-ts/dist/src-BCi83sdM.mjs:531:18)
+    at async <anonymous> (/home/oskar/Programming/mod-collection/mod-scraper/node_modules/@hey-api/openapi-ts/dist/src-BCi83sdM.mjs:529:33)
+    at async <anonymous> (/home/oskar/Programming/mod-collection/mod-scraper/node_modules/@hey-api/openapi-ts/dist/run.mjs:58:15)
+    at processTicksAndRejections (native:7:39)

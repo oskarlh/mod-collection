@@ -1,0 +1,65 @@
+secrets:
+  mod_scraper_secrets:
+    file: modScraperSecrets.json
+services:
+  db:
+    environment:
+      POSTGRES_PASSWORD: password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    image: postgres:latest
+    ports:
+      - "6222:5432"
+    volumes:
+      - db-data:/var/lib/postgresql
+  mod-scraper-test-db:
+    environment:
+      POSTGRES_DB: mod-scraper-unit-test-db
+      POSTGRES_USER: mod-scraper-unit-test-db-user
+      POSTGRES_PASSWORD: mod-scraper-unit-test-db-password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 4s
+      timeout: 4s
+      retries: 5
+    image: postgres:latest
+    ports:
+      - "6223:5432"
+    volumes:
+      - db-data:/var/lib/postgresql
+  mod-scraper:
+    build:
+      context: ./mod-scraper
+      target: run-service
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PG_DATABASE: postgres
+      PG_HOST: db
+      PG_PASSWORD: password
+      PG_PORT: 5432
+      PG_USERNAME: postgres
+      MOD_SECRETS_FILE: /run/secrets/modScraperSecrets.json
+      TEST_PG_DATABASE: mod-scraper-unit-test-db
+      TEST_PG_HOST: mod-scraper-test-db
+      TEST_PG_PASSWORD: mod-scraper-unit-test-db-password
+      TEST_PG_PORT: 5432
+      TEST_PG_USERNAME: mod-scraper-unit-test-db-user
+    links:
+      - db
+      - redis-for-scheduling
+    secrets:
+      - source: mod_scraper_secrets
+        target: modScraperSecrets.json
+  redis-for-scheduling:
+    command: "redis-server --appendonly yes --loglevel warning --requirepass VdEZGjT33WXvCee6bCC6xwGd"
+    image: redis:latest
+    volumes:
+      - mod-scraper-data:/data
+volumes:
+  db-data:
+  mod-scraper-data:

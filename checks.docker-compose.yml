@@ -1,0 +1,35 @@
+services:
+  mod-scraper-test-db:
+    environment:
+      POSTGRES_DB: mod-scraper-unit-test-db
+      POSTGRES_USER: mod-scraper-unit-test-db-user
+      POSTGRES_PASSWORD: mod-scraper-unit-test-db-password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 4s
+      timeout: 4s
+      retries: 5
+    image: postgres:latest
+    volumes:
+      - db-data:/var/lib/postgresql
+  mod-scraper-check-formatting:
+    build:
+      context: ./mod-scraper
+      target: check-formatting
+  mod-scraper-lint:
+    build:
+      context: ./mod-scraper
+      target: lint
+  mod-scraper-test:
+    build:
+      context: ./mod-scraper
+      target: test
+    depends_on:
+      mod-scraper-test-db:
+        condition: service_healthy
+    environment:
+      TEST_PG_DATABASE: mod-scraper-unit-test-db
+      TEST_PG_HOST: mod-scraper-test-db
+      TEST_PG_PASSWORD: mod-scraper-unit-test-db-password
+      TEST_PG_PORT: 5432
+      TEST_PG_USERNAME: mod-scraper-unit-test-db-user
